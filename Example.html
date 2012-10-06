@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Sonic To Gif</title>
+</head>
+<body>
+<script type="text/javascript" src="Encoder/b64.js"></script>
+<script type="text/javascript" src="Encoder/LZWEncoder.js"></script>
+<script type="text/javascript" src="Encoder/NeuQuant.js"></script>
+<script type="text/javascript" src="Encoder/GIFEncoder.js"></script>
+<script type="text/javascript" src="sonic.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  sonic = new Sonic({
+	  
+	  	convert:true,//If you want a gif image
+		background:"#fff",//background colour - gifs can't be transparent
+		
+		width: 500,
+		height: 100,
+
+		stepsPerFrame: 5,
+		trailLength: 1,
+		pointDistance: .04,
+		fps: 10.1,//maximum value for gifs :(
+
+		fillColor:'#B400F5',
+
+		step: function(point, index) {
+			
+			this._.beginPath();
+			this._.moveTo(point.x, point.y);
+			this._.arc(point.x, point.y, index * 7, 0, Math.PI*2, false);
+			this._.closePath();
+			this._.fill();
+
+		},
+
+		path: [
+			['bezier', 50, 50, 150, 90, 80, 10, 0, 90],
+			['bezier', 150, 90, 250, 10, 200, 90, 200, 10],
+			['bezier', 250, 10, 350, 90, 300, 10, 300, 90],
+			['bezier', 350, 90, 450, 50, 420, 90, 300, 10],
+			
+			['bezier', 450, 50, 350, 10, 420, 90, 300, 10],
+			['bezier', 350, 10, 250, 90, 300, 10, 300, 90],
+			['bezier', 250, 90, 150, 10, 200, 90, 200, 10],
+			['bezier', 150, 10, 50, 50, 80, 10, 0, 90]
+		]
+	})
+	
+	document.getElementById("canvas").appendChild(sonic.canvas);	
+	document.getElementById("gif").appendChild(sonic.img);//NEW 
+	sonic.play()
+}
+</script>
+<p>(wait until sonic animation completes once)</p><br />
+<p>Canvas Element:</p>
+<div id="canvas"></div>
+<p>Animated Gif:</p>
+<div id="gif"></div>
+</body>
+</html>
